@@ -746,15 +746,15 @@ a:hover {
   table-layout: auto;
 }
 
-.table-wrap table.inventory-table { min-width: 980px; }
-.table-wrap table.product-table { min-width: 1040px; }
-.table-wrap table.sales-order-table { min-width: 1240px; table-layout: fixed; }
-.table-wrap table.sales-order-table th:nth-child(1), .table-wrap table.sales-order-table td:nth-child(1) { width: 13%; }
-.table-wrap table.sales-order-table th:nth-child(2), .table-wrap table.sales-order-table td:nth-child(2) { width: 18%; }
-.table-wrap table.sales-order-table th:nth-child(3), .table-wrap table.sales-order-table td:nth-child(3) { width: 19%; }
-.table-wrap table.sales-order-table th:nth-child(4), .table-wrap table.sales-order-table td:nth-child(4) { width: 32%; white-space: normal; }
-.table-wrap table.sales-order-table th:nth-child(5), .table-wrap table.sales-order-table td:nth-child(5) { width: 10%; }
-.table-wrap table.sales-order-table th:nth-child(6), .table-wrap table.sales-order-table td:nth-child(6) { width: 8%; }
+.table-wrap table.inventory-table { min-width: 680px; table-layout: fixed; }
+.table-wrap table.product-table { min-width: 760px; table-layout: fixed; }
+.table-wrap table.sales-order-table { min-width: 740px; table-layout: fixed; }
+.table-wrap table.sales-order-table th:nth-child(1), .table-wrap table.sales-order-table td:nth-child(1) { width: 11%; }
+.table-wrap table.sales-order-table th:nth-child(2), .table-wrap table.sales-order-table td:nth-child(2) { width: 17%; white-space: normal; overflow-wrap: anywhere; }
+.table-wrap table.sales-order-table th:nth-child(3), .table-wrap table.sales-order-table td:nth-child(3) { width: 18%; white-space: normal; }
+.table-wrap table.sales-order-table th:nth-child(4), .table-wrap table.sales-order-table td:nth-child(4) { width: 31%; white-space: normal; }
+.table-wrap table.sales-order-table th:nth-child(5), .table-wrap table.sales-order-table td:nth-child(5) { width: 12%; }
+.table-wrap table.sales-order-table th:nth-child(6), .table-wrap table.sales-order-table td:nth-child(6) { width: 11%; }
 .table-wrap table.sales-order-table tbody td { vertical-align: top; padding-top: 18px; padding-bottom: 18px; }
 
 .table-wrap th,
@@ -2532,20 +2532,31 @@ a:hover {
 .table-wrap tbody tr:hover { background:color-mix(in srgb,var(--primary-light) 56%,var(--bg-card)); }
 
 /* Product catalogue: a richer, easier-to-scan data surface */
-.page-content > .card:has(.product-table) {
-  padding: 18px;
+.page-content > .card:has(.product-table),
+.page-content > .card.inventory-card,
+.page-content > .card.sales-orders-card {
+  padding: 20px;
   border: 1px solid color-mix(in srgb,var(--primary) 20%,var(--border-light));
   background: linear-gradient(145deg,color-mix(in srgb,var(--primary-light) 12%,var(--bg-card)),var(--bg-card) 42%,color-mix(in srgb,var(--purple-light) 10%,var(--bg-card)));
   box-shadow: 0 18px 48px color-mix(in srgb,var(--primary) 8%,transparent),var(--shadow-md);
 }
-.page-content > .card:has(.product-table) .toolbar {
+.page-content > .card:has(.product-table):hover,
+.page-content > .card.inventory-card:hover,
+.page-content > .card.sales-orders-card:hover,
+.page-content > .card:has(.table-wrap):hover {
+  transform: none;
+}
+.page-content > .card:has(.product-table) .toolbar,
+.page-content > .card.sales-orders-card .toolbar {
   padding: 12px;
   border: 1px solid color-mix(in srgb,var(--primary) 18%,var(--border-light));
   border-radius: 16px;
   background: linear-gradient(110deg,color-mix(in srgb,var(--primary-light) 30%,var(--bg-secondary)),var(--bg-secondary) 60%,color-mix(in srgb,var(--purple-light) 20%,var(--bg-secondary)));
 }
-.page-content > .card:has(.product-table) .table-wrap {
-  overflow: hidden;
+.page-content > .card:has(.product-table) .table-wrap,
+.page-content > .card.inventory-card .table-wrap,
+.page-content > .card.sales-orders-card .table-wrap {
+  overflow-x: auto;
   border-radius: 16px;
   border-color: color-mix(in srgb,var(--primary) 18%,var(--border-light));
   box-shadow: 0 10px 28px rgba(2,8,23,.08);
@@ -4194,40 +4205,17 @@ a:focus-visible {
    ======================================== */
 
 .table-wrap tbody tr {
-  position: relative;
-  transform-origin: center left;
   transition:
-    transform 220ms var(--hover-easing),
     background-color 220ms var(--hover-easing),
     box-shadow 220ms var(--hover-easing);
-  will-change: transform, background-color;
-}
-
-.table-wrap tbody tr::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--primary), var(--purple));
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 220ms var(--hover-easing);
-  border-radius: 0 3px 3px 0;
 }
 
 .table-wrap tbody tr:hover {
-  transform: translateY(var(--hover-translate-y-sm)) scale(1.006);
+  transform: none;
   background-color: color-mix(in srgb, var(--primary-light) 35%, var(--bg-card));
   box-shadow:
     inset 3px 0 0 var(--primary),
     0 6px 16px color-mix(in srgb, var(--primary) 12%, transparent);
-  z-index: 2;
-}
-
-.table-wrap tbody tr:hover::before {
-  transform: scaleY(1);
 }
 
 .table-wrap tbody tr:hover td {

@@ -183,13 +183,13 @@ function ProductTable({ products, onEdit, onDelete, onRestock, canManage = true,
       <table className={showActions ? "product-table" : "inventory-table"}>
         <thead>
           <tr>
-            <th style={{ width: showActions ? '26%' : '34%' }}>PRODUCT</th>
+            <th style={{ width: showActions ? '26%' : '32%' }}>PRODUCT</th>
             <th style={{ width: showActions ? '12%' : '14%' }}>SKU</th>
             <th style={{ width: showActions ? '12%' : '14%' }}>CATEGORY</th>
             <th style={{ width: showActions ? '10%' : '14%' }}>PRICE</th>
             <th style={{ width: showActions ? '8%' : '10%' }}>STOCK</th>
-            <th style={{ width: '12%' }}>STATUS</th>
-            {showActions && <th style={{ width: '16%' }}>ACTIONS</th>}
+            <th style={{ width: showActions ? '13%' : '16%' }}>STATUS</th>
+            {showActions && <th style={{ width: '19%' }}>ACTIONS</th>}
           </tr>
         </thead>
         <tbody>
@@ -244,12 +244,12 @@ function SalesTable({ sales, customers = [] }) {
       <table className="sales-order-table">
         <thead>
           <tr>
-            <th style={{ width: '15%' }}>ORDER ID</th>
-            <th style={{ width: '20%' }}>CUSTOMER</th>
-            <th style={{ width: '20%' }}>DATE</th>
-            <th style={{ width: '25%' }}>ITEMS</th>
-            <th style={{ width: '10%' }}>AMOUNT</th>
-            <th style={{ width: '10%' }}>STATUS</th>
+            <th>ORDER ID</th>
+            <th>CUSTOMER</th>
+            <th>DATE</th>
+            <th>ITEMS</th>
+            <th>AMOUNT</th>
+            <th>STATUS</th>
           </tr>
         </thead>
         <tbody>
@@ -373,7 +373,7 @@ function AppContent() {
     const pageRoot = document.querySelector(".page-content");
     if (!pageRoot) return undefined;
     const revealTargets = pageRoot.querySelectorAll(
-      ".page-header, .module-page > section, .reports-page > section, .dashboard-grid > *, .dashboard-insights-grid > *, .settings-grid > *, .relationship-page > section, .page-content > .card, .table-wrap tbody tr"
+      ".page-header, .module-page > section, .reports-page > section, .dashboard-grid > *, .dashboard-insights-grid > *, .settings-grid > *, .relationship-page > section, .page-content > .card"
     );
     if (!("IntersectionObserver" in window)) {
       revealTargets.forEach(element => element.classList.add("scroll-revealed"));
@@ -386,7 +386,7 @@ function AppContent() {
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -36px 0px" });
+    }, { threshold: 0.01, rootMargin: "0px" });
     revealTargets.forEach(element => {
       element.classList.add("scroll-reveal");
       observer.observe(element);
@@ -407,7 +407,7 @@ function AppContent() {
       window.removeEventListener("scroll", parallax);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [page]);
+  }, [page, isAuthenticated]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1447,7 +1447,7 @@ function AppContent() {
 
           {/* Inventory */}
           {page === "Inventory" && (
-            <section className="card animate-fade-in">
+            <section className="card inventory-card animate-fade-in">
               <div className="inventory-summary" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginBottom: "24px" }}>
                 <div style={{ padding: "20px", background: "var(--bg-secondary)", border: "1px solid var(--border-light)", borderRadius: "var(--radius-lg)" }}>
                   <span style={{ display: "block", color: "var(--text-muted)", fontSize: "12px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" }}>Total Stock Units</span>
@@ -1584,7 +1584,7 @@ function AppContent() {
 
           {/* Sales & Orders */}
           {page === "Sales & Orders" && (
-            <section className="card animate-fade-in">
+            <section className="card sales-orders-card animate-fade-in">
               <div className="toolbar">
                 <input className="search-box" placeholder="Search customer or sale ID..."
                   value={query} onChange={e => setQuery(e.target.value)} aria-label="Search sales" />
