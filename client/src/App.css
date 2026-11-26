@@ -741,18 +741,21 @@ a:hover {
 
 .table-wrap table {
   width: 100%;
-  min-width: 760px;
   border-collapse: collapse;
   font-size: 13px;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
-/* Inventory has no actions column, so keep its six data columns spacious. */
 .table-wrap table.inventory-table { min-width: 980px; }
 .table-wrap table.product-table { min-width: 1040px; }
-.table-wrap table.inventory-table th,
-.table-wrap table.product-table th { padding-left: 14px; padding-right: 14px; }
-.table-wrap table.inventory-table th { font-size: 11px; letter-spacing: .4px; }
+.table-wrap table.sales-order-table { min-width: 1240px; table-layout: fixed; }
+.table-wrap table.sales-order-table th:nth-child(1), .table-wrap table.sales-order-table td:nth-child(1) { width: 13%; }
+.table-wrap table.sales-order-table th:nth-child(2), .table-wrap table.sales-order-table td:nth-child(2) { width: 18%; }
+.table-wrap table.sales-order-table th:nth-child(3), .table-wrap table.sales-order-table td:nth-child(3) { width: 19%; }
+.table-wrap table.sales-order-table th:nth-child(4), .table-wrap table.sales-order-table td:nth-child(4) { width: 32%; white-space: normal; }
+.table-wrap table.sales-order-table th:nth-child(5), .table-wrap table.sales-order-table td:nth-child(5) { width: 10%; }
+.table-wrap table.sales-order-table th:nth-child(6), .table-wrap table.sales-order-table td:nth-child(6) { width: 8%; }
+.table-wrap table.sales-order-table tbody td { vertical-align: top; padding-top: 18px; padding-bottom: 18px; }
 
 .table-wrap th,
 .table-wrap td {
@@ -2567,7 +2570,9 @@ a:hover {
   list-style: none;
   margin: 0;
   padding: 0;
-  min-width: 220px;
+  min-width: 0;
+  width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .sale-item-list li + li {

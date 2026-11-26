@@ -27,9 +27,42 @@ const initialSuppliers = [
 ];
 
 const initialSales = [
-  { id: "S-1004", customer: "Ali Ahmed", date: "Today, 10:42 AM", total: 2450, status: "Completed" },
-  { id: "S-1003", customer: "Walk-in Customer", date: "Today, 09:18 AM", total: 870, status: "Completed" },
-  { id: "S-1002", customer: "Sara Khan", date: "Yesterday", total: 3200, status: "Completed" },
+  {
+    id: "S-1004",
+    customer: "Ali Ahmed",
+    date: "Today, 10:42 AM",
+    total: 2450,
+    status: "Completed",
+    items: [
+      { productId: 1, name: "Fresh Milk 1L", price: 220, qty: 2 },
+      { productId: 3, name: "Basmati Rice 1kg", price: 350, qty: 2 },
+      { productId: 4, name: "Cooking Oil 1L", price: 590, qty: 2 },
+    ]
+  },
+  {
+    id: "S-1003",
+    customer: "Walk-in Customer",
+    date: "Today, 09:18 AM",
+    total: 870,
+    status: "Completed",
+    items: [
+      { productId: 2, name: "White Bread", price: 120, qty: 2 },
+      { productId: 5, name: "Chocolate Bar", price: 150, qty: 2 },
+      { productId: 6, name: "Mineral Water", price: 80, qty: 4 },
+    ]
+  },
+  {
+    id: "S-1002",
+    customer: "Sara Khan",
+    date: "Yesterday",
+    total: 3200,
+    status: "Completed",
+    items: [
+      { productId: 3, name: "Basmati Rice 1kg", price: 350, qty: 4 },
+      { productId: 4, name: "Cooking Oil 1L", price: 590, qty: 3 },
+      { productId: 1, name: "Fresh Milk 1L", price: 220, qty: 3 },
+    ]
+  },
 ];
 
 const menu = [
@@ -208,7 +241,7 @@ function SalesTable({ sales, customers = [] }) {
 
   return (
     <div className="table-wrap animate-fade-in">
-      <table>
+      <table className="sales-order-table">
         <thead>
           <tr>
             <th style={{ width: '15%' }}>ORDER ID</th>
@@ -1403,7 +1436,7 @@ function AppContent() {
             </section>
           )}
 
-          {/* Inventory */}
+          {/* Categories */}
           {page === "Categories" && (
             <div className="module-page animate-fade-in">
               <section className="module-intro"><span className="module-intro-icon">🏷️</span><div><h2>Product categories</h2><p>Categories organize the catalogue and connect supplier stock to the right products.</p></div></section>
@@ -1429,7 +1462,12 @@ function AppContent() {
                   <strong style={{ fontSize: "28px", fontWeight: 800, color: "var(--danger)" }}>{outOfStock}</strong>
                 </div>
               </div>
-              <ProductTable products={[...products].sort((a, b) => a.stock - b.stock)} showActions={false} />
+              <ProductTable
+                products={[...products].sort((a, b) => a.stock - b.stock)}
+                showActions={false}
+                canManage={canManage}
+                loading={loading.products}
+              />
               <p className="helper-text" style={{ marginTop: "16px", fontSize: "12px", color: "var(--text-muted)" }}>Low stock means 5 units or fewer. Changes persist to database.</p>
             </section>
           )}
@@ -1530,7 +1568,7 @@ function AppContent() {
             </section>
           )}
 
-          {/* Sales & Orders */}
+          {/* Purchases */}
           {page === "Purchases" && (
             <div className="module-page animate-fade-in">
               <section className="module-intro purchase-intro"><span className="module-intro-icon">🧺</span><div><h2>Purchases & supplier payments</h2><p>Record stock received from a supplier. The purchase adds quantities to existing product records.</p></div></section>
