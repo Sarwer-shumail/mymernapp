@@ -147,15 +147,15 @@ function ProductTable({ products, onEdit, onDelete, onRestock, canManage = true,
 
   return (
     <div className="table-wrap animate-fade-in">
-      <table>
+      <table className={showActions ? "product-table" : "inventory-table"}>
         <thead>
           <tr>
             <th style={{ width: showActions ? '26%' : '34%' }}>PRODUCT</th>
-            <th style={{ width: '14%' }}>SKU</th>
-            <th style={{ width: '14%' }}>CATEGORY</th>
-            <th style={{ width: '14%' }}>PRICE</th>
-            <th style={{ width: '10%' }}>STOCK</th>
-            <th style={{ width: showActions ? '12%' : '14%' }}>STATUS</th>
+            <th style={{ width: showActions ? '12%' : '14%' }}>SKU</th>
+            <th style={{ width: showActions ? '12%' : '14%' }}>CATEGORY</th>
+            <th style={{ width: showActions ? '10%' : '14%' }}>PRICE</th>
+            <th style={{ width: showActions ? '8%' : '10%' }}>STOCK</th>
+            <th style={{ width: '12%' }}>STATUS</th>
             {showActions && <th style={{ width: '16%' }}>ACTIONS</th>}
           </tr>
         </thead>
@@ -171,10 +171,10 @@ function ProductTable({ products, onEdit, onDelete, onRestock, canManage = true,
               <td>{p.sku || `SKU-${p.id}`}</td>
               <td><span className="badge badge-info">{p.category}</span></td>
               <td><strong>{money(p.price)}</strong></td>
-              <td>{p.stock}</td>
+              <td>{Number(p.stock) || 0}</td>
               <td>
-                <span className={`badge ${p.stock <= 5 ? "badge-danger" : p.stock <= 10 ? "badge-warning" : "badge-success"}`}>
-                  {p.stock === 0 ? "Out of Stock" : p.stock <= 5 ? "Low Stock" : p.stock <= 10 ? "Limited" : "In Stock"}
+                <span className={`badge ${Number(p.stock) === 0 ? "badge-danger" : Number(p.stock) <= 5 ? "badge-danger" : Number(p.stock) <= 10 ? "badge-warning" : "badge-success"}`}>
+                  {Number(p.stock) === 0 ? "Out of Stock" : Number(p.stock) <= 5 ? "Low Stock" : Number(p.stock) <= 10 ? "Limited" : "In Stock"}
                 </span>
               </td>
               {showActions && <td className="actions-cell">
